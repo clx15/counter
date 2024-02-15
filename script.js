@@ -28,12 +28,15 @@ document.getElementById('resetBtn').addEventListener('click', function() {
     resetTimer();
     clicksByHour.fill(0); // Reset the clicksByHour array
     updateClicksByHourDisplay(); // Update the display
+    displayClickTimes(); // Update click times display
 });
 
 document.getElementById('saveDataBtn').addEventListener('click', saveData);
 
+// Ensure display areas are updated on page load
 document.addEventListener('DOMContentLoaded', function() {
     updateClicksByHourDisplay(); // Initial display of clicks by hour
+    displayClickTimes(); // Display click times initially
 });
 
 function startTimerEvent() {
@@ -47,7 +50,6 @@ function resetTimer() {
     clickTimes = [];
     document.getElementById('timer').innerText = "00:00:00";
     document.getElementById('clickCounter').innerText = 0;
-    document.getElementById('clickTimes').innerHTML = '';
 }
 
 function startTimer() {
@@ -66,31 +68,36 @@ function startTimer() {
         (seconds > 9 ? seconds : "0" + seconds);
 }
 
-
 function updateClicksByHourDisplay() {
+    const baseContainer = document.getElementById('clickDataContainer');
     let container = document.getElementById('clicksByHour');
     if (!container) {
         container = document.createElement('div');
         container.id = 'clicksByHour';
-        document.getElementById('app').appendChild(container);
+        baseContainer.insertBefore(container, baseContainer.firstChild); // Insert at the beginning
     }
     container.innerHTML = '<h3>Clicks by Hour:</h3>';
-    let contentAdded = false; // Track if any content is added
-
     clicksByHour.forEach((count, hour) => {
         if (count > 0) {
-            // Only display intervals with clicks
-            let displayHour = hour < 10 ? `0${hour}` : hour; // Format hour for display
-            let nextHour = (hour + 1) % 24;
-            let displayNextHour = nextHour < 10 ? `0${nextHour}` : nextHour;
-            container.innerHTML += `<div>${displayHour}:00 - ${displayNextHour}:00: ${count} clicks</div>`;
-            contentAdded = true;
+            container.innerHTML += `<div>${hour}:00 - ${hour + 1}:00: ${count} clicks</div>`;
         }
     });
+}
 
-    if (!contentAdded) {
-        container.innerHTML += '<div>No clicks recorded yet.</div>';
+function displayClickTimes() {
+    const baseContainer = document.getElementById('clickDataContainer');
+    let container = document.getElementById('clickTimes');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'clickTimes';
+        if (baseContainer.lastChild && baseContainer.lastChild.id === 'clicksByHour') {
+            baseContainer.appendChild(container); // Ensures it comes after clicks by hour
+        } else {
+            baseContainer.insertBefore(container, null); // Insert at the end if for some reason clicks by hour isn't there
+        }
     }
+    let content = clickTimes.map(click => click.formattedTime).join('<br>');
+    container.innerHTML = `<h3>Click Times:</h3>${content}`;
 }
 
 function saveData() {
@@ -108,15 +115,4 @@ function saveData() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-}
-
-function displayClickTimes() {
-    let clickTimesDisplay = clickTimes.map(click => click.formattedTime).join('<br>');
-    const clickTimesElement = document.getElementById('clickTimes');
-    if (!clickTimesElement) {
-        const newElement = document.createElement('div');
-        newElement.id = 'clickTimes';
-        document.getElementById('app').appendChild(newElement);
-    }
-    document.getElementById('clickTimes').innerHTML = '<h3>Click Times:</h3>' + clickTimesDisplay;
 }
