@@ -76,10 +76,10 @@ function updateClicksByHourDisplay() {
         container.id = 'clicksByHour';
         baseContainer.insertBefore(container, baseContainer.firstChild); // Insert at the beginning
     }
-    container.innerHTML = '<h3>Clicks by Hour:</h3>';
+    container.innerHTML = '<h3>Tickets by Hour:</h3>';
     clicksByHour.forEach((count, hour) => {
         if (count > 0) {
-            container.innerHTML += `<div>${hour}:00 - ${hour + 1}:00: ${count} clicks</div>`;
+            container.innerHTML += `<div>${hour}:00 - ${hour + 1}:00: ${count} tickets</div>`;
         }
     });
 }
@@ -97,7 +97,7 @@ function displayClickTimes() {
         }
     }
     let content = clickTimes.map(click => click.formattedTime).join('<br>');
-    container.innerHTML = `<h3>Click Times:</h3>${content}`;
+    container.innerHTML = `<h3>Ticket times:</h3>${content}`;
 }
 
 function saveData() {
