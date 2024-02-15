@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timer and Counter</title>
+<link rel="stylesheet" href="style.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+    <div id="app">
+        <h1>Timer: <span id="timer">00:00:00</span></h1>
+        <button id="startBtn">Start</button>
+        <button id="countBtn">Count</button>
+        <button id="saveDataBtn">Save Data</button>
+        <button id="resetBtn">Reset</button>
+        <h2>Tickets: <span id="clickCounter">0</span></h2>
+        <div>
+            <input id="startHour" type="number" placeholder="Start Hour (24h format)" min="0" max="23">
+            <input id="endHour" type="number" placeholder="End Hour (24h format)" min="0" max="23">
+            <button id="countIntervalBtn">Count Clicks in Interval</button>
+        </div>
+        <h3>Clicks in Interval: <span id="clicksInInterval">0</span></h3>
+        <div id="clickTimes"></div>
+       
+        
+    </div>   
+<script src="script.js"></script> <!-- Link to your JavaScript file -->
+</body>
+</html>
