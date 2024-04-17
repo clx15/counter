@@ -11,15 +11,15 @@ body, html {
 
 .container {
     display: flex;
-    justify-content: space-between; /* Adjust as needed */
+    justify-content: space-between; 
 }
 
 .left-side, .right-side {
-    flex: 1; /* Adjust this value as needed to control width */
-    padding: 10px; /* Adds some space around the content */
+    flex: 1; 
+    padding: 10px; 
 }
 
-/* Additional styles for responsiveness, if necessary */
+
 @media (max-width: 800px) {
     .container {
         flex-direction: column;
